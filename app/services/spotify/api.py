@@ -59,6 +59,18 @@ class SpotifyAPI:
             params={"limit": limit, "time_range": time_range},
         )
         return [_parse_track(item) for item in data.get("items", [])]
+    
+    async def search_tracks(
+        self, user_id: str, *, query: str, limit: int = 10
+    ) -> list[Track]:
+        data = await self._c.request(
+            user_id,
+            "GET",
+            "/search",
+            params={"q": query, "type": "track", "limit": limit},
+        )
+        items = data.get("tracks", {}).get("items", [])
+        return [_parse_track(item) for item in items]
 
 
 def _parse_track(item: dict) -> Track:
