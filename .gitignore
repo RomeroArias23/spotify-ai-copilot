@@ -37,3 +37,8 @@ data/
 
 # Docker
 .docker/
+
+.env
+.env.*
+*.env
+.env.bak
